@@ -157,6 +157,9 @@
         <li><button class="tab-button" role="tab" aria-selected="false" aria-controls="tab-claude-code" data-tab="claude-code">
           <img src="https://cdn.simpleicons.org/anthropic/000000" alt=""> Claude Code
         </button></li>
+        <li><button class="tab-button" role="tab" aria-selected="false" aria-controls="tab-cursor" data-tab="cursor">
+          Cursor / Grok Bot
+        </button></li>
         <li><button class="tab-button" role="tab" aria-selected="false" aria-controls="tab-chatgpt" data-tab="chatgpt">
           <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/chatgpt-icon.png" alt=""> ChatGPT
         </button></li>
@@ -222,6 +225,7 @@
 /plugin install securin-platform@securin-skills</code></pre>
         </div>
         <p class="muted">Update later with <code>/plugin marketplace update securin-skills</code>.</p>
+        <p>On first use, a browser opens at <code>auth.securin.io</code>. Sign in with your own Securin account. The plugin connects to <code>https://mcp.securin.io/mcp</code> and does not contain a token.</p>
 
         <details style="margin-top: 1.25rem;">
           <summary><strong>Pre-configure for your team</strong></summary>
@@ -239,6 +243,25 @@
 }</code></pre>
           </div>
         </details>
+      </div>
+
+      <!-- Cursor and Grok Bot -->
+      <div class="tab-panel" id="tab-cursor" role="tabpanel" aria-hidden="true">
+        <h3>Cursor Marketplace</h3>
+        <p>After the listing is approved, install <strong>Securin Platform</strong> (<code>securin-platform</code>) from the Cursor or Grok Bot Marketplace. The plugin loads the 6 skills and connects to <code>https://mcp.securin.io/mcp</code>.</p>
+        <p>On the first request that needs your data, the host opens Securin SSO. Sign in with your own account.</p>
+        <h3 style="margin-top: 1.5rem;">Manual setup</h3>
+        <p>Add this to <code>~/.cursor/mcp.json</code> or the project <code>.cursor/mcp.json</code>:</p>
+        <div class="code-wrap">
+          <pre><code>{
+  "mcpServers": {
+    "securin": {
+      "url": "https://mcp.securin.io/mcp"
+    }
+  }
+}</code></pre>
+        </div>
+        <p>Desktop Cursor already reaches the login page. Cursor Agents and Grok Bot need the https callback allowlisted before a login page appears. See <a href="https://github.com/securin-public/securin-skills/blob/main/docs/oauth-redirects.md">docs/oauth-redirects.md</a>.</p>
       </div>
 
       <!-- ChatGPT -->

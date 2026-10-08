@@ -1,0 +1,21 @@
+{
+  "name": "securin-platform",
+  "version": "0.1.0",
+  "description": "Securin Platform. See what attackers see. 6 guided skills plus 50+ read-only MCP tools for assets, exposures, CVEs, threat correlation, and remediation. Requires a Securin account; OAuth SSO on first connect.",
+  "author": {
+    "name": "Securin Inc",
+    "email": "support@securin.io"
+  },
+  "homepage": "https://www.securin.io",
+  "repository": "https://github.com/securin-public/securin-skills",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "security",
+    "vulnerability",
+    "exposure",
+    "cve",
+    "mcp",
+    "securin"
+  ],
+  "logo": "assets/logo.svg"
+}
