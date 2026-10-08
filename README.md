@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <sub>Also works with Claude Code, Windsurf, Gemini CLI, Codex CLI, and any MCP-compatible host.</sub>
+  <sub>Also works with Cursor, Grok Bot, Claude Code, Windsurf, Gemini CLI, Codex CLI, and any MCP-compatible host.</sub>
 </p>
 <!-- prettier-ignore-end -->
 
@@ -140,6 +140,8 @@ The plugin marketplace installs both the MCP server and all 6 skills:
 
 To update later: `/plugin marketplace update securin-skills`.
 
+The plugin connects to `https://mcp.securin.io/mcp` over remote HTTP. On first use, a browser opens at `auth.securin.io`. Sign in with your own Securin account. The plugin does not contain a token. Stdio-only hosts that cannot use remote HTTP can use the `mcp-remote` fallback in [docs/examples/claude-mcp-remote.json](docs/examples/claude-mcp-remote.json). The Claude Desktop `.mcpb` download still uses that bridge. Redirect URIs that identity must allow are listed in [docs/oauth-redirects.md](docs/oauth-redirects.md).
+
 <!-- prettier-ignore-start -->
 <details>
 <summary>Pre-configure for your team</summary>
@@ -195,6 +197,41 @@ Add to your project's `.claude/settings.json`:
 
 ---
 
+<!-- prettier-ignore -->
+### <img src="https://cdn.simpleicons.org/cursor/000000" height="16" alt="Cursor"> Cursor and Grok Bot
+
+One plugin, `securin-platform`, covers the Cursor IDE, Cursor Agents, and Grok Bot. Skills load from `skills/`. The MCP server is the OAuth URL only.
+
+**Marketplace (after the listing is approved)**
+
+1. Open the Cursor or Grok Bot Marketplace and install **Securin Platform**.
+2. On the first request that needs Securin data, the host opens a browser to Securin SSO. Sign in with your own account.
+3. Ask a question such as `Show me my open critical exposures breaching SLA.`
+
+Publishers submit the repository at <https://cursor.com/marketplace/publish>. The checklist is [docs/submission.md](docs/submission.md).
+
+**Manual install (before the listing is live)**
+
+Add this to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (one project):
+
+```json
+{
+  "mcpServers": {
+    "securin": {
+      "url": "https://mcp.securin.io/mcp"
+    }
+  }
+}
+```
+
+Cursor speaks remote HTTP. Do not use `npx mcp-remote` for Cursor. Copy `skills/securin-*` into `.agents/skills/` only if you are not installing the plugin, which loads `skills/` on its own.
+
+**First-run OAuth**
+
+Desktop Cursor uses `http://localhost:8787/callback`, which already reaches the Securin login page. Cursor Agents and Grok Bot use `https://www.cursor.com/agents/mcp/oauth/callback`. Keycloak currently rejects that https callback with `Invalid parameter: redirect_uri`, so those surfaces do not show a login page until identity allowlists it. Details and the full URI list: [docs/oauth-redirects.md](docs/oauth-redirects.md).
+
+---
+
 ### Other hosts
 
 Windsurf, Gemini CLI, Codex CLI, and any MCP-compatible host: see **[docs/host-setup.md](docs/host-setup.md)** for per-host instructions.
@@ -230,7 +267,9 @@ Two endpoints, same tools — pick by how you connect:
 
 ### OAuth (default)
 
-No tokens to manage. Sign in once via your browser; the session caches under `~/.mcp-auth` and refreshes automatically. To switch identities: `rm -rf ~/.mcp-auth` and reconnect (in Claude Code, `/mcp` → select `securin` → **Clear credentials**).
+No tokens to manage. Sign in once via your browser; the session caches under `~/.mcp-auth` for `mcp-remote`, or in the host's own credential store for native HTTP clients, and refreshes automatically. To switch identities: `rm -rf ~/.mcp-auth` and reconnect (in Claude Code, `/mcp` → select `securin` → **Clear credentials**). Each person signs in as themselves, including on a shared team bot. A bearer token is one shared identity and is not what Marketplace or directory users should use.
+
+Identity administrators allowlist the OAuth redirect URIs in [docs/oauth-redirects.md](docs/oauth-redirects.md). Store submission steps for Cursor and Claude are in [docs/submission.md](docs/submission.md).
 
 ### Bearer token (programmatic)
 
@@ -445,6 +484,8 @@ Each skill lives in `skills/<skill-name>/SKILL.md`. To improve one:
 - [Securin Platform API docs](https://docs.securin.io)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [Agent Skills standard](https://agentskills.io/home)
+- [OAuth redirect URIs for Securin IAM](docs/oauth-redirects.md)
+- [Cursor and Claude submission checklist](docs/submission.md)
 
 ## Support
 

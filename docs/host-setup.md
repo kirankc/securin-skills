@@ -38,11 +38,13 @@ Or copy skill subdirectories into your project's `.agents/skills/`.
 
 ---
 
-## Cursor
+## Cursor and Grok Bot
 
-> **One-click:** use the install badge from the [README](../README.md#install).
+The Cursor Marketplace plugin is `securin-platform` (manifest `.cursor-plugin/plugin.json`, MCP config `mcp.json`). Grok Bot uses that same plugin and the same OAuth callbacks. After Cursor approves the listing, install **Securin Platform** from the Marketplace. The plugin loads `skills/` and connects to `https://mcp.securin.io/mcp`. On first use, sign in with your own Securin account in the browser.
 
-**Manual setup** — add to `.cursor/mcp.json`:
+Publishers: <https://cursor.com/marketplace/publish>. Checklist: [submission.md](submission.md).
+
+**Manual setup** (before the listing is live). Add to `~/.cursor/mcp.json` or `.cursor/mcp.json`:
 
 ```json
 {
@@ -54,7 +56,11 @@ Or copy skill subdirectories into your project's `.agents/skills/`.
 }
 ```
 
-**Skills** — clone this repo and copy skill subdirectories from `skills/` into your project's `.agents/skills/`.
+Cursor uses remote HTTP. Do not wrap this URL in `npx mcp-remote`.
+
+**Skills.** The Marketplace plugin discovers `skills/*/SKILL.md`. For a manual install, copy each `skills/securin-*` directory into the project's `.agents/skills/`.
+
+**First-run OAuth.** Desktop uses `http://localhost:8787/callback` (login page already works). Cursor Agents and Grok Bot use `https://www.cursor.com/agents/mcp/oauth/callback`, which Keycloak currently rejects. The URI list for identity is [oauth-redirects.md](oauth-redirects.md).
 
 ---
 

@@ -30,8 +30,8 @@ explicitly asked you to proceed.
 
 In scope:
 
-- The plugin manifest (`.claude-plugin/plugin.json`)
-- The MCP configuration (`.mcp.json`)
+- The plugin manifests (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.cursor-plugin/plugin.json`)
+- The MCP configuration (`.mcp.json`, root `mcp.json`)
 - All files under `skills/` — including skill content, shared references,
   and example FQL / prompt strings that could be abused
 - The brand pipeline in `skills/_shared/brand.md` and its example code
